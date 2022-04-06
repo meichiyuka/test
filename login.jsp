@@ -8,7 +8,7 @@
 </head>
 <body>
 <form action = "greeting" method = "POST" class = "user_input">
-あ
+
 		<p class = "ID">ID:<input type = "text" name = "ID"></p>
 		<p class = "PW">PW:<input type = "text" name = "PW"></p>	
 	<input type = "submit" value = "login">
