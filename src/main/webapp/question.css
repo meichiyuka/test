@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+.qBrock{
+	margin-top:10px;
+	text-align:center;
+}
+
+.questionNum{
+	width:1%;
+}
+
+.questionTxt{
+	width:50%
+}
+
+.aBrock{
+	text-align:center;
+}
+
+.answerTxt{
+	width:50%
+}
