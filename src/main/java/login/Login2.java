@@ -29,11 +29,6 @@ public class Login2 extends HttpServlet {
 		
 		try {
 			dao =  new UsersDao();
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		try {
 			list = dao.findName(userid);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
