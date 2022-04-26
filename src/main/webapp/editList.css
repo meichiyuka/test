@@ -16,6 +16,10 @@ body{
 	margin-left:5px;
 }
 
+.questionNum{
+	width:3%;
+}
+
 .bottomBtn1, .bottomBtn2, .bottomBtn3{
 	text-align:right;
 }
@@ -57,4 +61,8 @@ td{
 
 .addTxt{
 	width: 88%;
+}
+
+.editAnswer{
+	width: 89%;
 }

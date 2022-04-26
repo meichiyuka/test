@@ -27,6 +27,18 @@
 	ArrayList<AnswersBean> alist = (ArrayList<AnswersBean>) request.getAttribute("aList");
 	%>
 	
+	<div class = "topBtn">
+		<!-- topに戻るボタン -->
+		<form action="top.jsp" method = "POST" class = "top">
+			<input type = "submit" value = "top">
+		</form>
+		
+		<!-- logoutボタン -->
+		<form action="login.jsp" method = "POST" class = "logout">
+			<input type = "submit" value = "logout">
+		</form>
+	</div>
+	
 	<%
 	//問題文リストを使ってループ
 	for (int i = 0; i < qlist.size(); i++) {
@@ -34,15 +46,23 @@
 		QuestionsBean qList = qlist.get(i);
 	%>
 	<div class="qBrock">
+	
 		<label> 
 			<!--i行のデータから、問題番号を取得。テキストボックス内に表示-->
 			問題 <input type = "text" class = "questionNum" readonly = "readonly" value = "<%=qList.getId()%>">
 			<!--i行のデータから、問題文を取得。テキストボックス内に表示-->
 			<input type = "text" class = "questionTxt" readonly ="readonly" value = "<%=qList.getQuestion()%>">
-			<input type = "button" value="編集">
-			<input type = "button" value="削除">
-
 		</label>
+		
+		<div class = "editBtn">
+			<form action = "EditList" method = "POST" id = "edit">
+				<button type="submit" name="edit" value="<%=qList.getId()%>">編集</button>
+			</form>
+	
+			<form action="DeleatList" method="POST" id="del">
+				<button type="submit" name="edit" value="<%=qList.getId()%>">削除</button>
+			</form>
+		</div>
 	</div>
 	
 	<%
@@ -58,8 +78,7 @@
 			答え<input type = "text" class = "questionNum" readonly = "readonly" value = "<%=aList.getQuestions_id()%>">
 			<!--i行のデータから、答えを取得。テキストボックス内に表示-->
 			<input type = "text" class = "answerTxt" readonly = "readonly" value = "<%=aList.getAnswer()%>">
-			<input type = "button" value="編集">
-			<input type = "button" value="削除">
+
 		</label>
 		</div>	
 	

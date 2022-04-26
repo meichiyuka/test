@@ -1,7 +1,7 @@
 package login;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.PreparedStatement;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -11,56 +11,55 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Questions
+ * Servlet implementation class DeleatList
  */
-@WebServlet("/Questions")
-public class Questions extends HttpServlet {
+@WebServlet("/DeleatList")
+public class DeleatList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public void doPost(HttpServletRequest req,HttpServletResponse res ) throws ServletException,IOException{
 		res.setContentType("text/html; charset = UTF=8");
 
-		//問題文のリスト格納用に、リスト型のaListを作成
-		ArrayList<QuestionsBean> qlist = null;
-		
-		//QuestionsDao型のオブジェクトdaoを作成してnull代入
-		QuestionsDao dao = null;
-		
-		//答えのリスト格納用に、リスト型のaListを作成
-		ArrayList<AnswersBean> aList = null;
-		
-		//AnswersBean型のオブジェクトdaoを作成してnull代入
-		AnswersDao aDao = null;
+		//問題一覧画面から、問題Noを取得
+		int editNo = Integer.parseInt(req.getParameter("edit"));
+
+		ConnectionDao con = null;
 
 		try {
-			//QuestionsDaoをインスタンス化
-			dao = new QuestionsDao();
-			
-			//QuestionsDao内の、findAll()メソッドをlistに代入
-			qlist = dao.findAll();
-			
-			//AnswersDaoをインスタンス化
-			aDao = new AnswersDao();
-			
-			//AnswersDao内の、findAll()メソッドをlistに代入
-			//DBの値を全件取得してリストに入れる
-			aList = aDao.findAll();
-			
+			//conを初期化
+			con = new ConnectionDao();
+
+			PreparedStatement st = null;
+
+			//問題DBをdeleatするSQL
+			String sql1 = "delete from questions where id = ?";
+			//該当するquestions_idに対応する答えの削除をするSQL
+			String sql2 = "delete from correct_answers where questions_id = ?";
+
+			//sql1を実行
+			st = con.con.prepareStatement(sql1);
+			st.setInt(1, editNo);
+			st.executeUpdate();
+			st.close();
+
+			//sql2を実行
+			st = con.con.prepareStatement(sql2);
+			st.setInt(1, editNo);
+			st.executeUpdate();
+			st.close();
+
+
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-
-		//問題と答えそれぞれのリストをjspに渡している
-		req.setAttribute("qList", qlist);
-		req.setAttribute("aList", aList);
-		RequestDispatcher disList = req.getRequestDispatcher("./questionList.jsp");
-		disList.forward(req,res);
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher("Questions");
+		dispatcher.forward(req,res);
 	}
-	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Questions() {
+    public DeleatList() {
         super();
         // TODO Auto-generated constructor stub
     }

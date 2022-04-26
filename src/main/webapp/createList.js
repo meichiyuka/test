@@ -15,7 +15,6 @@
         // セルの内容入力
         cell1.innerHTML = '<div class = "ttl">答え：</div><form class = "data"><input type = "text" class = "addTxt" name="data[]"></form>';
         cell2.innerHTML = '<input type="button" value="削除" id="coladd" onclick="coldel(this)">';
-   console.log("呼ばれたよ");
     }
     
 	function coldel(obj) {
