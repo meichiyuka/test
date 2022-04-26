@@ -1,6 +1,7 @@
 package login;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -10,58 +11,55 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Login2
+ * Servlet implementation class DeleatList
  */
-@WebServlet("/Login2")
-public class Login2 extends HttpServlet {
+@WebServlet("/DeleatList")
+public class DeleatList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-
 	public void doPost(HttpServletRequest req,HttpServletResponse res ) throws ServletException,IOException{
 		res.setContentType("text/html; charset = UTF=8");
 
-		//画面から入力されたIDとPWを取得する
-		String userid = req.getParameter("ID");
-		String password = req.getParameter("PW");
+		//問題一覧画面から、問題Noを取得
+		int editNo = Integer.parseInt(req.getParameter("edit"));
 
-		UsersDao dao = null;
-		UsersBean list = null;
-		
+		ConnectionDao con = null;
+
 		try {
-			dao =  new UsersDao();
-			list = dao.findName(userid);
+			//conを初期化
+			con = new ConnectionDao();
+
+			PreparedStatement st = null;
+
+			//問題DBをdeleatするSQL
+			String sql1 = "delete from questions where id = ?";
+			//該当するquestions_idに対応する答えの削除をするSQL
+			String sql2 = "delete from correct_answers where questions_id = ?";
+
+			//sql1を実行
+			st = con.con.prepareStatement(sql1);
+			st.setInt(1, editNo);
+			st.executeUpdate();
+			st.close();
+
+			//sql2を実行
+			st = con.con.prepareStatement(sql2);
+			st.setInt(1, editNo);
+			st.executeUpdate();
+			st.close();
+
+
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 		
-		//listが0行か？
-		if(list.getId() == 0) {
-			req.setAttribute("fromServlet",  "1");
-			RequestDispatcher dispacher = req.getRequestDispatcher("./login.jsp");
-			dispacher.forward(req,res);
-			return;
-		}	
-		
-		//listのパスワードと入力されたパスワードが一致するか
-		String str = list.getPassword();
-		if(password.equals(str)) {
-			req.setAttribute("fromServlet",  "2");
-			RequestDispatcher dispacher = req.getRequestDispatcher("./top.jsp");
-			dispacher.forward(req,res);
-		}else {
-			req.setAttribute("fromServlet",  "3");
-			RequestDispatcher dispacher = req.getRequestDispatcher("./login.jsp");
-			dispacher.forward(req,res);
-		}
-
-	}	
-	
-	
+		RequestDispatcher dispatcher = req.getRequestDispatcher("Questions");
+		dispatcher.forward(req,res);
+	}
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login2() {
+    public DeleatList() {
         super();
         // TODO Auto-generated constructor stub
     }

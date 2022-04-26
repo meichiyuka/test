@@ -1,22 +1,47 @@
 @charset "UTF-8";
 
+body{
+	width:50%;
+	margin:auto;
+}
+
+.topBtn, .bottomBtn{
+	text-align:right;
+	float:right;
+	margin:5px 120px 20px 0;
+}
+
+.top, .logout{
+	float:left;
+	margin-left:5px;
+}
+
 .qBrock{
-	margin-top:10px;
-	text-align:center;
+	margin-top:15px;
+	clear:both;
+    overflow:hidden;
 }
 
 .questionNum{
-	width:1%;
+	width:2%;
 }
 
-.questionTxt{
-	width:50%
+.questionTxt, .answerTxt{
+	width:80%
 }
 
 .aBrock{
-	text-align:center;
+	margin-top:2px;
 }
 
-.answerTxt{
-	width:50%
+.editBtn{
+	float:right;
+	margin-right:10px;
 }
+
+#edit ,#del{
+	float:left;
+	margin-right:3px;
+}
+
+

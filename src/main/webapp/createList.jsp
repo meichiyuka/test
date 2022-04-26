@@ -24,9 +24,6 @@
 		</form>
 	</div>
 
-
-
-
 	<form action="CreateList" method="POST" id="check">
 
 		<div class="qBrock">
@@ -42,22 +39,22 @@
 			</tr>
 		</table>
 
-
 	</form>
-			<div class="bottomBtn1">
-			<!--追加ボタン -->
-			<input type="button" value="追加" id="add" onclick="coladd()">
-		</div>
 
-		<div class="bottomBtn2">
-			<!--確認ボタン -->
-			<button type="submit" form = "check">確認</button>
-		</div>
-		
-		<div class="bottomBtn3">
-			<!--戻るボタン -->
-			<input type="button" value="戻る">
-		</div>
+	<div class="bottomBtn1">
+		<!--追加ボタン -->
+		<input type="button" value="追加" id="add" onclick="coladd()">
+	</div>
+
+	<div class="bottomBtn2">
+		<!--確認ボタン -->
+		<button type="submit" form="check">確認</button>
+	</div>
+
+	<div class="bottomBtn3">
+		<!--戻るボタン -->
+		<input type="button" value="戻る">
+	</div>
 
 </body>
 </html>

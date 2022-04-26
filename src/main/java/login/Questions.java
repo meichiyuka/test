@@ -24,41 +24,27 @@ public class Questions extends HttpServlet {
 		
 		//QuestionsDao型のオブジェクトdaoを作成してnull代入
 		QuestionsDao dao = null;
-
-		//QuestionsDaoをインスタンス化
-		try {
-			dao = new QuestionsDao();
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-
-		//QuestionsDao内の、findAll()メソッドをlistに代入
-		try {
-			qlist = dao.findAll();
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		
 		
 		//答えのリスト格納用に、リスト型のaListを作成
 		ArrayList<AnswersBean> aList = null;
+		
 		//AnswersBean型のオブジェクトdaoを作成してnull代入
 		AnswersDao aDao = null;
 
-		//AnswersDaoをインスタンス化
 		try {
+			//QuestionsDaoをインスタンス化
+			dao = new QuestionsDao();
+			
+			//QuestionsDao内の、findAll()メソッドをlistに代入
+			qlist = dao.findAll();
+			
+			//AnswersDaoをインスタンス化
 			aDao = new AnswersDao();
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-
-		//AnswersDao内の、findAll()メソッドをlistに代入
-		//DBの値を全件取得してリストに入れる
-		try {
+			
+			//AnswersDao内の、findAll()メソッドをlistに代入
+			//DBの値を全件取得してリストに入れる
 			aList = aDao.findAll();
+			
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -69,11 +55,8 @@ public class Questions extends HttpServlet {
 		req.setAttribute("aList", aList);
 		RequestDispatcher disList = req.getRequestDispatcher("./questionList.jsp");
 		disList.forward(req,res);
-
 	}
 	
-	
-
     /**
      * @see HttpServlet#HttpServlet()
      */

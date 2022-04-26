@@ -3,6 +3,7 @@ package login;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -53,7 +54,9 @@ public class CreateList extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}		
-
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher("Questions");
+		dispatcher.forward(req,res);
 	}
     /**
      * @see HttpServlet#HttpServlet()

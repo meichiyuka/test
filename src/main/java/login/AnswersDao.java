@@ -62,7 +62,7 @@ public class AnswersDao extends ConnectionDao {
 	/**
 	 * 指定IDのレコードを取得する
 	 */
-	public AnswersBean find(int ques_id) throws Exception {
+	public ArrayList<AnswersBean> findByQuestions(int ques_id) throws Exception {
 		if (con == null) {
 			setConnection();
 		}
@@ -74,6 +74,7 @@ public class AnswersDao extends ConnectionDao {
 			st = con.prepareStatement(sql);
 			st.setInt(1, ques_id);
 			rs = st.executeQuery();
+			ArrayList<AnswersBean> list = new ArrayList<AnswersBean>();
 			AnswersBean bean = new AnswersBean();
 			while (rs.next()) {
 				int id = rs.getInt("id");
@@ -82,8 +83,9 @@ public class AnswersDao extends ConnectionDao {
 				bean.setId(id);
 				bean.setQuestions_id(questions_id);
 				bean.setAnswer(answer);
+				list.add(bean);
 			}
-			return bean;
+			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("レコードの取得に失敗しました");

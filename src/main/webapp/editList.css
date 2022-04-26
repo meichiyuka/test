@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+body{
+	width:30%;
+	margin:auto;
+}
+
+.topBtn, .bottomBtn{
+	text-align:right;
+	float:right;
+	margin:5px 0 5px 0;
+}
+
+.top, .logout{
+	float:left;
+	margin-left:5px;
+}
+
+.questionNum{
+	width:3%;
+}
+
+.bottomBtn1, .bottomBtn2, .bottomBtn3{
+	text-align:right;
+}
+
+#add, .bottomBtn2, .bottomBtn3{
+	float:right;
+	margin:5px 0 0 2px;
+}
+
+.qBrock{
+	clear:both;
+    overflow:hidden;
+}
+
+p{
+	display:inline-block;
+    vertical-align:top;
+    margin-top:0;
+    margin-bottom:0;
+}
+
+.qTxt{
+	width:85%;
+    height:100px;
+    padding-right: 25px;
+}
+
+td{
+	width:100%;
+}
+
+.ttl{
+	float:left;
+}
+
+#answerTxt{
+ 	width:110%;
+}
+
+.addTxt{
+	width: 88%;
+}
+
+.editAnswer{
+	width: 89%;
+}
