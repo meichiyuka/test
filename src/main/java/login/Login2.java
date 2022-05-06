@@ -21,22 +21,22 @@ public class Login2 extends HttpServlet {
 		res.setContentType("text/html; charset = UTF=8");
 
 		//画面から入力されたIDとPWを取得する
-		String userid = req.getParameter("ID");
+		String userName = req.getParameter("ID");
 		String password = req.getParameter("PW");
 
-		UsersDao dao = null;
-		UsersBean list = null;
+		UsersDao usersDao = null;
+		UsersBean usersBean = null;
 		
 		try {
-			dao =  new UsersDao();
-			list = dao.findName(userid);
+			usersDao =  new UsersDao();
+			usersBean = usersDao.findName(userName);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 		
 		//listが0行か？
-		if(list.getId() == 0) {
+		if(usersBean.getId() == 0) {
 			req.setAttribute("fromServlet",  "1");
 			RequestDispatcher dispacher = req.getRequestDispatcher("./login.jsp");
 			dispacher.forward(req,res);
@@ -44,9 +44,10 @@ public class Login2 extends HttpServlet {
 		}	
 		
 		//listのパスワードと入力されたパスワードが一致するか
-		String str = list.getPassword();
+		String str = usersBean.getPassword();
 		if(password.equals(str)) {
 			req.setAttribute("fromServlet",  "2");
+			req.setAttribute("user_name",  userName);
 			RequestDispatcher dispacher = req.getRequestDispatcher("./top.jsp");
 			dispacher.forward(req,res);
 		}else {
@@ -55,6 +56,7 @@ public class Login2 extends HttpServlet {
 			dispacher.forward(req,res);
 		}
 
+		
 	}	
 	
 	

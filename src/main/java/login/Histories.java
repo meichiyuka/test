@@ -1,6 +1,7 @@
 package login;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -10,36 +11,44 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class CreateList
+ * Servlet implementation class Histories
  */
-@WebServlet("/CreateList")
-public class CreateList extends HttpServlet {
+@WebServlet("/Histories")
+public class Histories extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public void doPost(HttpServletRequest req,HttpServletResponse res ) throws ServletException,IOException{
+	public  void doPost(HttpServletRequest req,HttpServletResponse res) throws ServletException,IOException{
 		res.setContentType("text/html; charset = UTF=8");
+
+		String user_name = req.getParameter("user_name");
 		
-		//画面から入力された答えを取得する
-		String[] data = req.getParameterValues("data[]");
-		//画面から入力された問題を取得する
-		String[] qData = req.getParameterValues("qData");
-		
-		QuestionsDao questionsDao = null;
-		
+		UsersBean usersBean = null;
+		UsersDao usersDao = null;
+		ArrayList<HistoriesBean> historiesList = null;
+		HistoriesDao historiesDao = null;
+
 		try {
-			questionsDao = new QuestionsDao();
-			questionsDao.insertAnswer(qData, data);
+			usersDao = new UsersDao();
+			usersBean = usersDao.findName(user_name);			
+			historiesDao = new HistoriesDao();
+			historiesList = historiesDao.findAll();
+
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("Questions");
+		//問題と答えそれぞれのリストをjspに渡している
+		req.setAttribute("historiesList", historiesList);
+		req.setAttribute("users_id", usersBean.getId());
+		req.setAttribute("user_name", user_name);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("./histories.jsp");
 		dispatcher.forward(req,res);
 	}
+     
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateList() {
+    public Histories() {
         super();
         // TODO Auto-generated constructor stub
     }

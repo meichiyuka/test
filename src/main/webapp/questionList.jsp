@@ -3,6 +3,7 @@
 
 <!DOCTYPE html>
 <html>
+ <jsp:include page="header.jsp" flush="true" />
 <head>
 <meta charset="UTF-8">
 <title>QuestionList</title>
@@ -18,13 +19,13 @@
 	<%
 	request.setCharacterEncoding("UTF8");
 	//問題文のリストを受け取る
-	ArrayList<QuestionsBean> qlist = (ArrayList<QuestionsBean>) request.getAttribute("qList");
+	ArrayList<QuestionsBean> questionsList = (ArrayList<QuestionsBean>) request.getAttribute("qList");
 	%>
 	
 	<%
 	request.setCharacterEncoding("UTF8");
 	//答えのリストを受け取る
-	ArrayList<AnswersBean> alist = (ArrayList<AnswersBean>) request.getAttribute("aList");
+	ArrayList<AnswersBean> answerList = (ArrayList<AnswersBean>) request.getAttribute("aList");
 	%>
 	
 	<div class = "topBtn">
@@ -41,9 +42,9 @@
 	
 	<%
 	//問題文リストを使ってループ
-	for (int i = 0; i < qlist.size(); i++) {
+	for (int i = 0; i < questionsList.size(); i++) {
 		//i行目のデータをqListに代入
-		QuestionsBean qList = qlist.get(i);
+		QuestionsBean qList = questionsList.get(i);
 	%>
 	<div class="qBrock">
 	
@@ -67,9 +68,9 @@
 	
 	<%
 	//答えのリストを使ってループ
-	for (int n = 0; n < alist.size(); n++) {
+	for (int n = 0; n < answerList.size(); n++) {
 		//n行目のデータをqListに代入
-		AnswersBean aList = alist.get(n);
+		AnswersBean aList = answerList.get(n);
 		//答えDBのquestions_idと、問題文DBのidが一致しているかを判定
 		if(aList.getQuestions_id() == qList.getId()){%>
 		<div class="aBrock">
