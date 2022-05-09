@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+body{
+	width:50%;
+	margin:auto;
+}
+
+.topBtn, .bottomBtn{
+	text-align:right;
+	float:right;
+	margin:5px 80px 20px 0;
+}
+
+.top, .logout{
+	float:left;
+	margin-left:5px;
+}
+
+.questionNum{
+	width: 20px;
+}
+
+.qBrock{
+	clear:both;
+    overflow:hidden;
+}
+
+.questionTxt{
+	width:85%;
+    height:100px;
+    padding-right: 25px;
+}
+
+p, .questionNum{
+	display:inline-block;
+    vertical-align:top;
+    margin-top:0;
+    margin-bottom:0;
+}
+
+.answer{
+	margin:5px 0 30px 0;
+}
+
+.AnswerTxt{
+	padding-right:70%;
+}

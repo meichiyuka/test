@@ -1,7 +1,6 @@
 package login;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -20,39 +19,18 @@ public class DeleatList extends HttpServlet {
 		res.setContentType("text/html; charset = UTF=8");
 
 		//問題一覧画面から、問題Noを取得
-		int editNo = Integer.parseInt(req.getParameter("edit"));
-
-		ConnectionDao con = null;
-
+		int question_id = Integer.parseInt(req.getParameter("edit"));
+		
+		QuestionsDao questionsDao = null;
+		
 		try {
-			//conを初期化
-			con = new ConnectionDao();
-
-			PreparedStatement st = null;
-
-			//問題DBをdeleatするSQL
-			String sql1 = "delete from questions where id = ?";
-			//該当するquestions_idに対応する答えの削除をするSQL
-			String sql2 = "delete from correct_answers where questions_id = ?";
-
-			//sql1を実行
-			st = con.con.prepareStatement(sql1);
-			st.setInt(1, editNo);
-			st.executeUpdate();
-			st.close();
-
-			//sql2を実行
-			st = con.con.prepareStatement(sql2);
-			st.setInt(1, editNo);
-			st.executeUpdate();
-			st.close();
-
-
+			questionsDao = new QuestionsDao();
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 		
+		questionsDao.delete(question_id);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("Questions");
 		dispatcher.forward(req,res);
 	}

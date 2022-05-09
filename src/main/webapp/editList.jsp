@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+ <jsp:include page="header.jsp" flush="true" />
 <head>
 <meta charset="UTF-8">
 <title>editList</title>

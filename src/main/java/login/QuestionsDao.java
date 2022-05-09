@@ -148,4 +148,137 @@ public class QuestionsDao extends ConnectionDao {
 			}
 		}
 	}
+	
+	/**
+	 * 答えを新規登録する
+	 * @throws Exception 
+	 */
+	public void insertAnswer(String[] question, String[] answer) throws Exception {
+		
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		int id = 0; 
+		try {
+			//問題番号の最大値を取得する
+			id = register(question[0]);
+			if (con == null) {
+				setConnection();
+			}
+			//答えDBにdataをinsertするSQL
+			String sql = "insert into correct_answers(questions_id,answer,created_at,updated_at) values(?,?,CURRENT_TIME,CURRENT_TIME);";
+			
+			//答えが複数の場合があるので、ループ回す			
+			for(int i = 0; i < answer.length; i++) {
+				st = con.prepareStatement(sql);
+				st.setInt(1, id);
+				st.setString(2, answer[i]);
+				st.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("レコードの登録に失敗しました");
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}				
+				if (st != null) {
+					st.close();
+				}
+				close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new Exception("リソースの開放に失敗しました");
+			}
+		}
+	}
+	
+	/**
+	 * 問題文と答えを更新する
+	 * @throws Exception 
+	 */
+	
+	public void update(int question_id, String question, String answer[]) throws Exception {
+		
+		if (con == null) {
+			setConnection();
+		}
+		
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			//問題DBにdataをupdateするSQL
+			String sql1 = "update questions set question = ?, update_at = CURRENT_TIME where id = ?;";
+			//該当するquestions_idに対応する答えの削除をするSQL
+			String sql2 = "delete from correct_answers where questions_id = ?";
+			//答えを新規登録するSQL
+			String sql3 = "insert into correct_answers (questions_id, answer, created_at, updated_at) value(?, ?, CURRENT_TIME, CURRENT_TIME);";
+			
+			//sql1を実行
+			st = con.prepareStatement(sql1);
+			st.setString(1,question);
+			st.setInt(2, question_id);
+			st.executeUpdate();
+			st.close();
+
+			//sql2を実行
+			st = con.prepareStatement(sql2);
+			st.setInt(1, question_id);
+			st.executeUpdate();
+			st.close();
+			
+			//答えが複数の場合があるので、ループ回す			
+			for(int i = 0; i < answer.length; i++) {
+				//sql3を実行
+				st = con.prepareStatement(sql3);
+				st.setInt(1, question_id);
+				st.setString(2, answer[i]);
+				st.executeUpdate();
+				st.close();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("レコードの登録に失敗しました");
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}				
+				if (st != null) {
+					st.close();
+				}
+				close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new Exception("リソースの開放に失敗しました");
+			}
+		}
+
+	}
+	
+	/**
+	 * 問題文と答えを削除する
+	 */
+	public int delete(int question_id) {
+		  if (con == null) {
+		    try {
+				setConnection();
+			} catch (Exception e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+		  }
+		  int status = 0;
+		  try {
+			PreparedStatement ps = con.prepareStatement("DELETE FROM questions where id = ?");
+			ps.setInt(1, question_id);
+			status = ps.executeUpdate();
+		  } catch (Exception e) {
+			e.printStackTrace();
+		 }
+		return status;
+		}
+	
 }

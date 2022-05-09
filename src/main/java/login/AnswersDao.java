@@ -104,4 +104,42 @@ public class AnswersDao extends ConnectionDao {
 			}
 		}
 	}
+	
+	/**
+	 * テストの回答を登録する
+	 */
+public void insertResultAnswer(int user_id, int point) throws Exception {
+		
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			if (con == null) {
+				setConnection();
+			}
+			//historiesに回答結果をinsertするSQL
+			String sql = "insert into histories(user_id,point,created_at) values(?,?,CURRENT_TIME);";
+			
+			//SQLを実行する			
+				st = con.prepareStatement(sql);
+				st.setInt(1, user_id);
+				st.setInt(2, point);
+				st.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("レコードの登録に失敗しました");
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}				
+				if (st != null) {
+					st.close();
+				}
+				close();
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new Exception("リソースの開放に失敗しました");
+			}
+		}
+	}
 }	
